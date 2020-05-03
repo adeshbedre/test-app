@@ -1,0 +1,21 @@
+<div *ngIf="seats">
+  <table>
+    <tbody>
+      <tr *ngFor="let rowOfSeats of seats">
+        <td *ngFor="let seat of rowOfSeats; let i = index">
+          <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'S'" type="button" class="btn btn-outline-danger"
+            title="{{seat.project}}" disabled>{{seat.seatNbr}}</button>
+          <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'NS'" type="button" [ngClass]="seat.currentlySelected ? 'btn btn-info' : 'btn btn-outline-success'"
+            disabled>{{seat.seatNbr}}</button>
+          <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'D'" type="button" class="btn btn-outline-secondary"
+            disabled>{{seat.seatNbr}}</button>
+          <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'M'" type="button" class="btn btn-outline-dark"
+            disabled title="Meeting Room: {{seat.seatNbr}}">&nbsp;</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="selectedSeats && selectedSeats.length > 0" class="alert alert-info" role="alert">
+    {{selectedSeats.length}} seats selected
+  </div>
+</div>

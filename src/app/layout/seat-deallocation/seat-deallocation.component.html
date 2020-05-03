@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <form [formGroup]="deallocationRequestForm">
+        <div class="input-group mb-3">
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Project</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedProject" formControlName="project" (change)="onProjectChange()">
+                    <option *ngFor="let project of projectList"  [ngValue]="project">{{project}}</option>
+                </select>
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.project.errors">Please select the value
+                of Project
+            </span>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Building</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedBuilding" formControlName="building" (change)="onBuildingChange()">
+                    <option *ngFor="let building of buildingList"  [ngValue]="building">{{building}}</option>
+                </select>
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.building.errors">Please select the value
+                of Building
+            </span>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Floor</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedFloor" (change)="onFloorChange()" formControlName="floor">
+                    <option *ngFor="let floor of floorList"  [ngValue]="floor">{{floor}}</option>
+                </select>
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.floor.errors">Please select the value
+                of Floor</span>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Bay</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" formControlName="bay" [(ngModel)]="selectedBay">
+                    <option *ngFor="let bay of bayList"  [ngValue]="bay">{{bay}}</option>
+                </select>
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.bay.errors">Please select the value of
+                Bay
+            </span>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Seat Count</label>
+                </div>
+                <input type="text" formControlName="seatCount" name="seatCount" class="form-control" [(ngModel)]="_seatCount" id="seatCount">
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.seatCount.errors">Please give the value of
+                Seat Count
+            </span>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text size" for="inputGroupSelect01">Request Initiator</label>
+                </div>
+                <input type="text" formControlName="requestInitiator" name="requestInitiator" class="form-control" [(ngModel)]="_requestInitiator"
+                    id="requestInitiator">
+            </div>
+            <span class="text-danger show" *ngIf="deallocationRequestForm.controls.requestInitiator.errors">Please give the value of Request Initiator
+            </span>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-secondary" (click)="clearForm()">Cancel</button>
+            <button type="button" class="btn btn-primary" [disabled]="!deallocationRequestForm.valid" (click)="onSubmit(deallocationRequestForm);">Submit</button>
+        </div>
+    </form>
+    <div *ngIf="_selectionExceededRequested">
+        <p-toast position="bottom-right"  (onClose)="onClose()"  [modal]="true">
+            <div class="toaster">
+                <ng-template let-message pTemplate="message">
+                    <div>
+                        <h3>{{message.summary}}</h3>
+                        <p>{{message.detail}}</p>
+                    </div>
+                </ng-template>
+            </div>
+        </p-toast>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://seat-allocation-service.herokuapp.com/",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

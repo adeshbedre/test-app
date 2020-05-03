@@ -1,0 +1,10 @@
+{
+    "msg": "Results Found",
+    "statusCd": 200,
+    "results": [
+        "string",
+        "bangalore-c1",
+        "bangalore-c2"
+    ],
+    "totalRecords": 3
+}

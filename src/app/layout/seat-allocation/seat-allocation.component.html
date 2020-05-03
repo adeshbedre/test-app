@@ -1,0 +1,65 @@
+<div class="container">
+    <table>
+        <tbody>
+            <tr *ngFor="let rowOfSeats of seats">
+                <td *ngFor="let seat of rowOfSeats; let i = index">
+                    <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'S'" type="button" class="btn btn-outline-danger seat"
+                        title="{{seat.project}}">{{seat.seatNbr}}</button>
+                    <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'NS'" type="button" class="seat" [ngClass]="seat.currentlySelected ? 'btn btn-info' : 'btn btn-outline-success'"
+                        (click)="selectDeselectAvailableSeats(seat)">{{seat.seatNbr}}</button>
+                    <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'D'" type="button" class="btn btn-outline-secondary seat"
+                        disabled>{{seat.seatNbr}}</button>
+                    <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'M'" type="button" class="btn btn-outline-dark seat"
+                        disabled title="Meeting Room: {{seat.seatNbr}}">&nbsp;</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="selectedSeats && selectedSeats.length > 0" class="alert alert-info" role="alert">
+        {{selectedSeats.length}} seats selected
+    </div>
+    <div *ngIf="_requestFlag">
+        <p-toast position="bottom-right" (onClose)="onClose()" [modal]="true">
+            <div class="toaster">
+                <ng-template let-message pTemplate="message">
+                    <div>
+                        <h3>{{message.summary}}</h3>
+                        <p>{{message.detail}}</p>
+                    </div>
+                </ng-template>
+            </div>
+        </p-toast>
+    </div>
+
+    <div class="row mt-5">
+        <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6  offset-lg-3 col-lg-6">
+            <button type="button" class="btn btn-outline-secondary btn-md button-class" (click)="onReject()">Reject</button>
+            <button type="button" class="btn btn-primary btn-md button-class float-right" (click)="onSubmit()">Submit</button>
+        </div>
+    </div>
+
+    <div class="modal" id="rejectSeatAllocation" #rejectSeatAllocation>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reject Comments</h5>
+                        <button type="button"  class="close"  data-dismiss="modal"  aria-label="Close"  (click)="hideModal()">
+                            <span aria-hidden="true">&times;</span>
+                                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <textarea class="modal-textarea-width" cols="30" rows="5" [(ngModel)]="_rejectComments"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="hideModal()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="onRejectCommentsSubmit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

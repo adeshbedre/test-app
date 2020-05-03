@@ -1,0 +1,83 @@
+<div class="container" [@routerTransition]>
+  <div class="col-lg-12 col-sm-12 col-12" [formGroup]="importSeatLayoutForm">
+    <div class="input-group mt-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Building</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedBuilding" formControlName="building" (change)="onBuildingChange()">
+        <option *ngFor="let building of buildingList"  [ngValue]="building">{{building}}</option>
+      </select>
+    </div>
+    <span class="text-danger show" *ngIf="importSeatLayoutForm.controls.building.errors">Please select the value of Building</span>
+    <div class="input-group mt-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Floor Id&nbsp;</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedFloor" (change)="onFloorChange()" formControlName="floor">
+        <option *ngFor="let floor of floorList"  [ngValue]="floor">{{floor}}</option>
+      </select>
+    </div>
+    <span class="text-danger show" *ngIf="importSeatLayoutForm.controls.floor.errors">Please select the value of Floor</span>
+    <div class="input-group mt-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Bay &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" formControlName="bay" [(ngModel)]="selectedBay">
+        <option *ngFor="let bay of bayList"  [ngValue]="bay">{{bay}}</option>
+      </select>
+    </div>
+    <span class="text-danger show" *ngIf="importSeatLayoutForm.controls.bay.errors">Please select the value of Bay</span>
+
+    <div class="input-group mt-3 alert alert-danger" role="alert" *ngIf="importSeatLayoutForm.controls.building.errors || importSeatLayoutForm.controls.floor.errors
+    || importSeatLayoutForm.controls.bay.errors">
+      Please select all the mandatory fields in top to bottom order
+    </div>
+    <div class="input-group mt-3" *ngIf="! (importSeatLayoutForm.controls.building.errors || importSeatLayoutForm.controls.floor.errors || importSeatLayoutForm.controls.bay.errors)">
+      <div class="custom-file">
+        <input type="file" #inputFile class="custom-file-input file" id="inputGroupFile" (change)="fileChange($event)">
+        <label class="custom-file-label" for="inputGroupFile" accept=".csv">{{selectedFileName}}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row seat-button">
+    <table class="scrollable-table">
+      <tbody>
+        <tr *ngFor="let rowOfSeats of seats">
+          <td *ngFor="let seat of rowOfSeats; let i = index">
+            <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'S'" type="button" class="btn btn-outline-danger"
+              title="{{seat.project}}">{{seat.seatNbr}}</button>
+            <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'NS'" type="button" [ngClass]="seat.currentlySelected ? 'btn btn-info' : 'btn btn-outline-success'">{{seat.seatNbr}}</button>
+            <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'D'" type="button" class="btn btn-outline-secondary"
+              disabled>{{seat.seatNbr}}</button>
+            <button *ngIf="seat.seatNbr && seat.seatNbr.trim() !== '' && seat.occupancy == 'M'" type="button" class="btn btn-outline-dark"
+              disabled title="Meeting Room: {{seat.seatNbr}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row seat-button" *ngIf="seats.length != 0">
+    <div class="col-lg-4 col-sm-2 col-2">
+    </div>
+    <div class="col-lg-4 col-sm-4 col-4">
+      <button type="button" class="btn btn-success" (click)="uploadCsv()">Upload</button>
+    </div>
+    <div class="col-lg-4 col-sm-4 col-4">
+      <button type="button" class="btn btn-danger" (click)="cancelUpload()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="_selectionExceededRequested">
+    <p-toast position="bottom-right"  (onClose)="onClose()"  [modal]="true">
+      <div class="toaster">
+        <ng-template let-message pTemplate="message">
+          <div>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+          </div>
+        </ng-template>
+      </div>
+    </p-toast>
+  </div>
+</div>

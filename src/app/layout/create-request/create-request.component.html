@@ -1,0 +1,83 @@
+<div class="container-fluid">
+<form [formGroup]="createRequestForm">
+    <div class="input-group mb-3">
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">Building</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedBuilding" formControlName="building" (change)="onBuildingChange()">
+          <option *ngFor="let building of buildingList"  [ngValue]="building">{{building}}</option>
+        </select>
+      </div>
+      <span class="text-danger show" *ngIf="createRequestForm.controls.building.errors">Please select the value of Building</span>
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">Floor Id&nbsp;</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedFloor" (change)="onFloorChange()" formControlName="floor">
+          <option *ngFor="let floor of floorList"  [ngValue]="floor">{{floor}}</option>
+        </select>
+      </div>
+      <span class="text-danger show" *ngIf="createRequestForm.controls.floor.errors">Please select the value of Floor</span>
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">Bay &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" formControlName="bay" [(ngModel)]="selectedBay">
+          <option *ngFor="let bay of bayList"  [ngValue]="bay">{{bay}}</option>
+        </select>
+      </div>
+      <span class="text-danger show" *ngIf="createRequestForm.controls.bay.errors">Please select the value of Bay</span>
+  </div>
+  <div class="row">
+   
+      <div class="col col-sm-2">
+        <label>{{'seatCount' | translate}}</label>
+      </div>
+      <div class="col col-sm-3">
+        <input type="text" formControlName="seatCount" name="seatCount" class="form-control" [(ngModel)]="_seatCount" id="seatCount"
+          placeholder="{{'seatCount' | translate}}">
+      </div>
+   
+  </div>
+  <div class="row">
+ 
+      <div class="col col-sm-2">
+        <label>{{'projectName' | translate}}</label>
+      </div>
+      <div class="col col-sm-3">
+        <input type="text" formControlName="projectName" name="projectName" class="form-control" [(ngModel)]="_projectName" id="projectName"
+          placeholder="{{'projectName' | translate}}">
+      </div>
+  
+  </div>
+  <div class="row">
+ 
+      <div class="col col-sm-2">
+        <label>{{'requestInitiator' | translate}}</label>
+      </div>
+      <div class="col col-sm-3">
+        <input type="text" formControlName="requestInitiator" name="requestInitiator" class="form-control" [(ngModel)]="_requestInitiator"
+          id="requestInitiator" placeholder="{{'requestInitiator' | translate}}">
+      </div>
+ 
+  </div>
+  <div class="row">
+      <button type="button" class="btn btn-secondary" (click)="clearForm()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit(createRequestForm);">Submit</button>
+  </div>
+</form>
+
+<div *ngIf="_selectionExceededRequested">
+    <p-toast position="bottom-right"  (onClose)="onClose()"  [modal]="true">
+      <div class="toaster">
+        <ng-template let-message pTemplate="message">
+          <div>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+          </div>
+        </ng-template>
+      </div>
+    </p-toast>
+  </div>
+</div>

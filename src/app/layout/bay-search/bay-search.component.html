@@ -1,0 +1,40 @@
+<div class="container" [@routerTransition]>
+    <div class="col-lg-12 col-sm-11 col-11" [formGroup]="baySearchForm">
+        <div class="input-group mt-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Building</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedBuilding" formControlName="building" (change)="onBuildingChange()">
+                <option *ngFor="let building of buildingList"  [ngValue]="building">{{building}}</option>
+            </select>
+        </div>
+        <span class="text-danger show" *ngIf="baySearchForm.controls.building.errors">Please select the value of Building</span>
+        <div class="input-group mt-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Floor Id&nbsp;</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="selectedFloor" (change)="onFloorChange()" formControlName="floor">
+                <option *ngFor="let floor of floorList"  [ngValue]="floor">{{floor}}</option>
+            </select>
+        </div>
+        <span class="text-danger show" *ngIf="baySearchForm.controls.floor.errors">Please select the value of Floor</span>
+        <div class="input-group mt-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Bay &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" formControlName="bay" [(ngModel)]="selectedBay">
+                <option *ngFor="let bay of bayList"  [ngValue]="bay">{{bay}}</option>
+            </select>
+        </div>
+        <span class="text-danger show" *ngIf="baySearchForm.controls.bay.errors">Please select the value of Bay</span>
+
+        <div class="input-group mt-3 alert alert-danger" role="alert" *ngIf="baySearchForm.controls.building.errors || baySearchForm.controls.floor.errors
+      || baySearchForm.controls.bay.errors">
+            Please select all the mandatory fields in top to bottom order
+        </div>
+        <button class="btn btn-primary size" [disabled]="!baySearchForm.valid" (click)="onSearch(baySearchForm)">Search</button>
+        <button class="btn btn-primary size" (click)="clearForm()">Reset</button>
+    
+    </div>
+    <app-bay-layout [seats]="seats"></app-bay-layout>
+</div>

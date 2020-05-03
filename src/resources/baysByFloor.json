@@ -1,0 +1,10 @@
+{
+    "msg": "Results Found",
+    "statusCd": 200,
+    "results": [
+        "Bay 1",
+        "Bay 2",
+        "Bay 3"
+    ],
+    "totalRecords": 3
+}

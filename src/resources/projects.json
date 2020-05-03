@@ -1,0 +1,10 @@
+{
+    "msg": "Results Found",
+    "statusCd": 200,
+    "results": [
+        "GFS",
+        "USCC",
+        "J&J"
+    ],
+    "totalRecords": 3
+}
